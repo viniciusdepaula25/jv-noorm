@@ -1,0 +1,59 @@
+import { db } from "src/db/database";
+import { TesteBasicCrud } from "src/shared/noorm/TesteCrud";
+import { CreateUserData, FindById, UpdateUserData, UserRepository } from "../user-repository";
+
+export class NoormUserRepository extends TesteBasicCrud implements UserRepository {
+
+  public constructor(params: { tableName: string; keyField?: string; listField?: string; softDelete?: boolean }) {
+    super({
+      tableName: params.tableName,
+      keyField: params.keyField,
+      listField: params.listField,
+      softDelete: params.softDelete === undefined || params.softDelete === null ? true : params.softDelete,
+    });
+  }
+
+    async createUser(data: CreateUserData){
+        const user = await this.create({
+          data:{
+            ...data,
+            createdAt: new Date(), 
+            updatedAt: new Date()
+          }})
+
+        return user
+    }
+
+    async findByEmail(email: string){
+        const user = await db.queryRow({
+            sql: ` SELECT *
+                     FROM users
+                    WHERE email = ?`,
+            values: [email],
+        });
+
+        return user
+    }
+
+    async findById(id: string){
+      const user = await db.queryRow({
+        sql: ` SELECT *
+                 FROM users
+                 WHERE id = ?
+                 AND deletedAt IS NULL`,
+        values: [id]
+      })
+
+      return user
+
+    }
+
+    async updateUser(data: UpdateUserData){
+        const user = await this.update({
+            key: data.id,
+            data
+        });
+
+        return user
+    }
+}
