@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt'
 import { UsersDTO } from 'src/models/UsersDTO'
 
 import { UserRepository } from '../repository/user-repository'
@@ -9,9 +10,17 @@ export class UserServices {
 
     if (findUser) throw new Error('Email já cadastrado')
 
-    const user = await this.userRepository.createUser({ name, email, password })
+    const salt = await bcrypt.genSalt(12)
+    const passwordHash = await bcrypt.hash(password, salt)
+
+    const user = await this.userRepository.createUser({
+      name,
+      email,
+      password: passwordHash,
+    })
 
     return {
+      id: user.id,
       name: user.name,
       email: user.email,
     }

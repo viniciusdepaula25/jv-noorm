@@ -30,11 +30,7 @@ export class NoormUserRepository
 
   async createUser(data: CreateUserData) {
     const user = await this.create({
-      data: {
-        ...data,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
+      data,
     })
 
     return user
