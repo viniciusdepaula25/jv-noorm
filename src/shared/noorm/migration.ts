@@ -1,7 +1,6 @@
-import { createMigration } from 'jv-noorm';
+import { createMigration } from 'jv-noorm'
+;(async () => {
+  await createMigration()
 
-(async () => {
-  await createMigration();
-
-  process.exit(0);
-})();
+  process.exit(0)
+})()

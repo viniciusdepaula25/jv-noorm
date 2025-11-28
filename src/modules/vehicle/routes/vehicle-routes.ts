@@ -1,6 +1,7 @@
-import {Router} from "express";
-import { VehicleControllers } from "../controllers/vehicle-controller";
+import { Router } from 'express'
 
-export const vehicleRoutes = Router();
+import { VehicleControllers } from '../controllers/vehicle-controller'
 
-vehicleRoutes.post('/create', VehicleControllers.create);
+export const vehicleRoutes = Router()
+
+vehicleRoutes.post('/create', VehicleControllers.create)

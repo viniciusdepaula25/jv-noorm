@@ -1,12 +1,13 @@
-import { VeiculoDTO } from "src/models/VeiculoDTO";
-import { VehicleCrud } from "../crud/vehicle-crud";
-import { VeiculoDTOExpress } from "../controllers/vehicle-controller";
+import { VeiculoDTO } from 'src/models/VeiculoDTO'
 
-export class VehicleServices{
-    static async create(data: VeiculoDTOExpress): Promise<VeiculoDTO> {
-        const vehicleCrud = new VehicleCrud()
-        const newVehicle = await vehicleCrud.create({data})
+import { VeiculoDTOExpress } from '../controllers/vehicle-controller'
+import { VehicleCrud } from '../crud/vehicle-crud'
 
-        return newVehicle
-    }
+export class VehicleServices {
+  static async create(data: VeiculoDTOExpress): Promise<VeiculoDTO> {
+    const vehicleCrud = new VehicleCrud()
+    const newVehicle = await vehicleCrud.create({ data })
+
+    return newVehicle
+  }
 }

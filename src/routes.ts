@@ -1,7 +1,7 @@
-import express from 'express';
+import express from 'express'
 
-import {vehicleRoutes} from './modules/vehicle/routes/vehicle-routes'
-import { userRoutes } from './modules/users/routes/users-routes';
+import { userRoutes } from './modules/users/routes/users-routes'
+import { vehicleRoutes } from './modules/vehicle/routes/vehicle-routes'
 
 export const routes = express.Router()
 

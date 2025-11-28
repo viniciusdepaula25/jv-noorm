@@ -1,11 +1,10 @@
-import { UserServices } from "../user-services";
-import { UserRepository } from "../../repository/user-repository";
-import { NoormUserRepository } from "../../repository/implementations/noorm-user-repository";
+import { NoormUserRepository } from '../../repository/implementations/noorm-user-repository'
+import { UserServices } from '../user-services'
 
 export function makeUserService() {
-    const userRepository = new NoormUserRepository({
-        tableName: 'users'
-    })
+  const userRepository = new NoormUserRepository({
+    tableName: 'users',
+  })
 
-    return new UserServices(userRepository)
+  return new UserServices(userRepository)
 }
