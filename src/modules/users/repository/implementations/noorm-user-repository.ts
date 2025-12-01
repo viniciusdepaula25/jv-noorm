@@ -69,4 +69,19 @@ export class NoormUserRepository
 
     return user
   }
+
+  async findByLogin(email: string) {
+    const user = await db.queryRow({
+      sql: `  SELECT u.id,
+                     u.name,
+                     u.email,
+                     u.password
+                FROM users u
+               WHERE email = ?
+                 AND deleted_at IS NULL`,
+      values: [email],
+    })
+
+    return user
+  }
 }

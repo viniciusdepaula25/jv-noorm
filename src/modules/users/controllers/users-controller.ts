@@ -1,11 +1,12 @@
 import { Request, Response } from 'express'
 
-import { makeUserService } from '../services/factories/make'
+import { UserServices } from '../services/user-services'
 
 export class UsersController {
   public static async create(req: Request, res: Response) {
     const { name, email, password } = req.body
-    const userServices = makeUserService()
+
+    const userServices = new UserServices()
 
     const user = await userServices.create(name, email, password)
 
@@ -15,7 +16,8 @@ export class UsersController {
   public static async update(req: Request, res: Response) {
     const { id } = req.params
     const { name, email } = req.body
-    const userServices = makeUserService()
+
+    const userServices = new UserServices()
 
     const user = await userServices.update(id, name, email)
 
@@ -24,7 +26,8 @@ export class UsersController {
 
   public static async getUser(req: Request, res: Response) {
     const { id } = req.params
-    const userServices = makeUserService()
+
+    const userServices = new UserServices()
 
     const user = await userServices.getUser(id)
 

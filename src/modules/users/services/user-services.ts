@@ -1,10 +1,18 @@
 import bcrypt from 'bcrypt'
 import { UsersDTO } from 'src/models/UsersDTO'
 
+import { NoormUserRepository } from '../repository/implementations/noorm-user-repository'
 import { UserRepository } from '../repository/user-repository'
 
 export class UserServices {
-  constructor(private readonly userRepository: UserRepository) {}
+  private readonly userRepository: UserRepository
+  constructor() {
+    const userRepository = new NoormUserRepository({
+      tableName: 'users',
+    })
+
+    this.userRepository = userRepository
+  }
 
   public async create(name: string, email: string, password: string) {
     const findUser = await this.userRepository.findByEmail(email)

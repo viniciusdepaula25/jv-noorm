@@ -15,6 +15,7 @@ const envSchema = z.object({
   DB_VERBOSE: z.string(),
   SCRIPTS_FOLDER: z.string(),
   MODELS_FOLDER: z.string(),
+  JWT_SECRET: z.string(),
 })
 
 const _env = envSchema.safeParse(process.env)
