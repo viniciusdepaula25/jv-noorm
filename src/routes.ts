@@ -1,9 +1,9 @@
 import express from 'express'
 
+import { listRoute } from './modules/list/routes/list-routes'
 import { userRoutes } from './modules/users/routes/users-routes'
-import { vehicleRoutes } from './modules/vehicle/routes/vehicle-routes'
 
 export const routes = express.Router()
 
-routes.use('/vehicle', vehicleRoutes)
 routes.use('/users', userRoutes)
+routes.use('/list', listRoute)
