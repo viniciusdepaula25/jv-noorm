@@ -5,6 +5,7 @@ import { UserRepository } from '../repository/user-repository'
 
 export class UserServices {
   constructor(private readonly userRepository: UserRepository) {}
+
   public async create(name: string, email: string, password: string) {
     const findUser = await this.userRepository.findByEmail(email)
 

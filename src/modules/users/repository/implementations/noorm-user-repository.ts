@@ -36,6 +36,15 @@ export class NoormUserRepository
     return user
   }
 
+  async updateUser(data: UpdateUserData) {
+    const user = await this.update({
+      key: data.id,
+      data,
+    })
+
+    return user
+  }
+
   async findByEmail(email: string) {
     const user = await db.queryRow({
       sql: ` SELECT *
@@ -56,15 +65,6 @@ export class NoormUserRepository
                 WHERE id = ?
                   AND deletedAt IS NULL`,
       values: [id],
-    })
-
-    return user
-  }
-
-  async updateUser(data: UpdateUserData) {
-    const user = await this.update({
-      key: data.id,
-      data,
     })
 
     return user
