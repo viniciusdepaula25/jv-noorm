@@ -18,16 +18,16 @@ export class ListServices {
     this.listRepository = listRepository
   }
 
-  public async create(userId: string, title: string): Promise<ListDTO> {
+  public async create(title: string, userId: string): Promise<ListDTO> {
     const list = await this.listRepository.createList({
-      ownerId: userId,
       title,
+      owner_id: userId,
     })
 
     await this.listMemberRepository.createListMember({
-      listId: list.id,
-      userId,
-      roles: 'owner',
+      list_id: list.id,
+      user_id: userId,
+      role: 'owner',
     })
 
     return list

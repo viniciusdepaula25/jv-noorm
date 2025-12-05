@@ -8,7 +8,7 @@ export class ListController {
     const { title } = req.body
     const listServices = new ListServices()
 
-    const user = await listServices.create(userId, title)
+    const user = await listServices.create(title, userId)
 
     return res.status(201).send(user)
   }
