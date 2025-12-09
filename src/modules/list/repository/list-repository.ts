@@ -12,12 +12,13 @@ export type CreateListMemberData = {
   role: string
 }
 
-export type FindByTitle = {
-  id: number
+export type GetList = {
+  owner_id: string
+  user_id: string
 }
 
 export interface ListRepository {
   createList(data: CreateListData): Promise<ListDTO>
   createListMember(data: CreateListMemberData): Promise<ListMemberDTO>
-  findByTitle(data: FindByTitle): Promise<any>
+  getList(data: GetList): Promise<any>
 }

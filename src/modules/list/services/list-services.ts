@@ -32,4 +32,14 @@ export class ListServices {
 
     return list
   }
+
+  public async getList(userId: string) {
+    const data = {
+      owner_id: userId,
+      user_id: userId,
+    }
+    const list = await this.listMemberRepository.getList(data)
+
+    return list
+  }
 }

@@ -4,8 +4,8 @@ import { TesteBasicCrud } from 'src/shared/noorm/TesteCrud'
 import {
   ListRepository,
   CreateListData,
-  FindByTitle,
   CreateListMemberData,
+  GetList,
 } from '../list-repository'
 
 export class NoormListRepository
@@ -45,14 +45,17 @@ export class NoormListRepository
     return list
   }
 
-  async findByTitle(data: FindByTitle) {
-    const list = await db.queryRow({
-      sql: `SELECT *
-                FROM list
-               WHERE id = ?`,
-      values: [data],
+  async getList(data: GetList) {
+    const lists = await db.queryRows({
+      sql: ` SELECT ls.*
+               FROM list ls
+               JOIN list_member lm ON ls.id = lm.list_id
+              WHERE (ls.owner_id = ?
+                 OR lm.user_id = ?)
+                AND ls.deleted_at IS NULL`,
+      values: [data.owner_id, data.user_id],
     })
 
-    return list
+    return lists
   }
 }

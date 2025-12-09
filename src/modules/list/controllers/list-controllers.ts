@@ -8,8 +8,18 @@ export class ListController {
     const { title } = req.body
     const listServices = new ListServices()
 
-    const user = await listServices.create(title, userId)
+    const output = await listServices.create(title, userId)
 
-    return res.status(201).send(user)
+    return res.status(201).send(output)
+  }
+
+  public static async getList(req: Request, res: Response) {
+    const { userId } = req.params
+
+    const listServices = new ListServices()
+
+    const output = await listServices.getList(userId)
+
+    return res.status(200).send(output)
   }
 }
