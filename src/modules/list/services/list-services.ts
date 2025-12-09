@@ -50,11 +50,13 @@ export class ListServices {
   }
 
   public async update(title: string, id: string) {
-    const list = await this.listRepository.updateList({
+    await this.listRepository.updateList({
       title,
       id,
     })
 
-    return list
+    const output = await this.listRepository.getList({ id })
+
+    return output
   }
 }
