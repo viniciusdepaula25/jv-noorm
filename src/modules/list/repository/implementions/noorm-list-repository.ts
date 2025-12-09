@@ -53,7 +53,7 @@ export class NoormListRepository
                FROM list ls
               WHERE id = ?
                 AND deleted_at IS NULL`,
-      values: [data],
+      values: [data.id],
     })
 
     return list
