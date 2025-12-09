@@ -33,12 +33,27 @@ export class ListServices {
     return list
   }
 
-  public async getList(userId: string) {
+  public async getList(id: string) {
+    const list = await this.listRepository.getList({ id })
+
+    return list
+  }
+
+  public async getAllList(userId: string) {
     const data = {
       owner_id: userId,
       user_id: userId,
     }
-    const list = await this.listMemberRepository.getList(data)
+    const list = await this.listMemberRepository.getAllList(data)
+
+    return list
+  }
+
+  public async update(title: string, id: string) {
+    const list = await this.listRepository.updateList({
+      title,
+      id,
+    })
 
     return list
   }

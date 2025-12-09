@@ -5,7 +5,9 @@ import {
   ListRepository,
   CreateListData,
   CreateListMemberData,
-  GetList,
+  GetAllListData,
+  UpdateListData,
+  GetListData,
 } from '../list-repository'
 
 export class NoormListRepository
@@ -45,9 +47,21 @@ export class NoormListRepository
     return list
   }
 
-  async getList(data: GetList) {
-    const lists = await db.queryRows({
-      sql: ` SELECT ls.*
+  async getList(data: GetListData) {
+    const list = await db.queryRow({
+      sql: ` SELECT ls.id, ls.title
+               FROM list ls
+              WHERE id = ?
+                AND deleted_at IS NULL`,
+      values: [data],
+    })
+
+    return list
+  }
+
+  async getAllList(data: GetAllListData) {
+    const list = await db.queryRows({
+      sql: ` SELECT ls.id, ls.title, lm.user_id, lm.role
                FROM list ls
                JOIN list_member lm ON ls.id = lm.list_id
               WHERE (ls.owner_id = ?
@@ -56,6 +70,17 @@ export class NoormListRepository
       values: [data.owner_id, data.user_id],
     })
 
-    return lists
+    return list
+  }
+
+  async updateList(data: UpdateListData) {
+    const list = await db.update({
+      command: `UPDATE list
+                   SET title = ?
+                 WHERE id = ?`,
+      values: [data.title, data.id],
+    })
+
+    return list
   }
 }
