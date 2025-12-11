@@ -33,4 +33,14 @@ export class UsersController {
 
     return res.status(200).send(user)
   }
+
+  public static async delete(req: Request, res: Response) {
+    const { id } = req.params
+
+    const userServices = new UserServices()
+
+    await userServices.delete(id)
+
+    return res.status(200).send(true)
+  }
 }

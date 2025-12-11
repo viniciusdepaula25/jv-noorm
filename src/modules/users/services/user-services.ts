@@ -9,6 +9,7 @@ export class UserServices {
   constructor() {
     const userRepository = new NoormUserRepository({
       tableName: 'users',
+      keyField: 'id',
     })
 
     this.userRepository = userRepository
@@ -49,5 +50,11 @@ export class UserServices {
     const user = await this.userRepository.findById(id)
 
     return user
+  }
+
+  public async delete(id: string) {
+    await this.userRepository.deleteUser(id)
+
+    return true
   }
 }

@@ -43,4 +43,14 @@ export class ListController {
 
     return res.status(200).send(output)
   }
+
+  public static async delete(req: Request, res: Response) {
+    const { id } = req.params
+
+    const listServices = new ListServices()
+
+    const output = await listServices.delete(id)
+
+    return res.status(200).send(output)
+  }
 }

@@ -18,4 +18,5 @@ export interface UserRepository {
   updateUser(data: UpdateUserData): Promise<UsersDTO>
   findById(id: string): Promise<any>
   findByLogin(email: string): Promise<UsersDTO>
+  deleteUser(id: string): Promise<any>
 }

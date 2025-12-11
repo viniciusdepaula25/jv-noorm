@@ -9,9 +9,11 @@ export class ListServices {
   constructor() {
     const listRepository = new NoormListRepository({
       tableName: 'list',
+      keyField: 'id',
     })
     const listMemberRepository = new NoormListRepository({
       tableName: 'list_member',
+      keyField: 'id',
     })
 
     this.listMemberRepository = listMemberRepository
@@ -58,5 +60,11 @@ export class ListServices {
     const output = await this.listRepository.getList({ id })
 
     return output
+  }
+
+  public async delete(id: string) {
+    await this.listRepository.deleteList({ id })
+
+    return true
   }
 }

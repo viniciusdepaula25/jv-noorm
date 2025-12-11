@@ -8,6 +8,8 @@ import {
   GetAllListData,
   UpdateListData,
   GetListData,
+  DeleteListData,
+  // GetListMemberData,
 } from '../list-repository'
 
 export class NoormListRepository
@@ -82,5 +84,33 @@ export class NoormListRepository
     })
 
     return list
+  }
+
+  // async deleteList(data: DeleteListData) {
+  //   const list = await db.delete({
+  //     command: ` DELETE FROM list WHERE id = ?`,
+  //     values: [data.id],
+  //     options: {
+  //       softDelete: true,
+  //     },
+  //   })
+
+  //   return list
+  // }
+
+  async deleteList(data: DeleteListData) {
+    await db.update({
+      command: ` UPDATE list
+                    SET deleted_at = NOW()
+                  WHERE id = ?`,
+      values: [data.id],
+    })
+
+    await db.update({
+      command: `UPDATE list_member
+                   SET deleted_at = NOW()
+                 WHERE list_id = ?`,
+      values: [data.id],
+    })
   }
 }

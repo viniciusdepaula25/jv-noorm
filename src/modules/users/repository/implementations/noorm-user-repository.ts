@@ -84,4 +84,22 @@ export class NoormUserRepository
 
     return user
   }
+
+  // async deleteUser(id: string) {
+  //   await this.delete({
+  //     key: id,
+  //     options: {
+  //       softDelete: true,
+  //     },
+  //   })
+  // }
+
+  async deleteUser(id: string) {
+    await db.update({
+      command: ` UPDATE users
+                    SET deleted_at = NOW()
+                  WHERE id = ?`,
+      values: [id],
+    })
+  }
 }
