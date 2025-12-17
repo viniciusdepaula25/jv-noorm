@@ -86,18 +86,6 @@ export class NoormListRepository
     return list
   }
 
-  // async deleteList(data: DeleteListData) {
-  //   const list = await db.delete({
-  //     command: ` DELETE FROM list WHERE id = ?`,
-  //     values: [data.id],
-  //     options: {
-  //       softDelete: true,
-  //     },
-  //   })
-
-  //   return list
-  // }
-
   async deleteList(data: DeleteListData) {
     await db.update({
       command: ` UPDATE list
