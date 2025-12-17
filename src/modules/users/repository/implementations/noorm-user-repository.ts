@@ -47,9 +47,10 @@ export class NoormUserRepository
 
   async findByEmail(email: string) {
     const user = await db.queryRow({
-      sql: ` SELECT *
-                     FROM users
-                    WHERE email = ?`,
+      sql: ` SELECT u.*
+               FROM users u
+              WHERE email = ?
+                AND deleted_at IS NULL`,
       values: [email],
     })
 
@@ -63,7 +64,7 @@ export class NoormUserRepository
                       u.email
                  FROM users u
                 WHERE id = ?
-                  AND deletedAt IS NULL`,
+                  AND deleted_at IS NULL`,
       values: [id],
     })
 

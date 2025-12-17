@@ -46,12 +46,13 @@ export class NoormMemberRepository
   async findAll(id: string) {
     const member = await db.queryRows({
       sql: `SELECT us.id,
-                        us.name,
-                        us.email
-                   FROM users us
-                   JOIN list_member lm ON us.id = lm.user_id
-                  WHERE lm.list_id = ?
-                    AND lm.deleted_at IS NULL`,
+                   us.name,
+                   us.email,
+                   lm.role
+              FROM users us
+              JOIN list_member lm ON us.id = lm.user_id
+             WHERE lm.list_id = ?
+               AND lm.deleted_at IS NULL`,
       values: [id],
     })
 
