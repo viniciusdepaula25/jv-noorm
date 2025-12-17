@@ -63,11 +63,12 @@ export class NoormListRepository
 
   async getAllList(data: GetAllListData) {
     const list = await db.queryRows({
-      sql: ` SELECT ls.id, ls.title, lm.user_id, lm.role
+      sql: ` SELECT ls.id, 
+                    ls.title
                FROM list ls
                JOIN list_member lm ON ls.id = lm.list_id
-              WHERE (ls.owner_id = ?
-                 OR lm.user_id = ?)
+              WHERE ls.owner_id = ?
+                 OR lm.user_id = ?
                 AND ls.deleted_at IS NULL`,
       values: [data.owner_id, data.user_id],
     })
