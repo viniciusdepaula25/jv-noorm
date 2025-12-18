@@ -5,6 +5,4 @@
 --      Author: vinicius
 
 ALTER TABLE users MODIFY deleted_at JSON;
-ALTER TABLE list MODIFY deleted_at JSON;
 ALTER TABLE task MODIFY deleted_at JSON;
-ALTER TABLE list_member MODIFY deleted_at JSON;
