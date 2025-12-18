@@ -16,21 +16,23 @@ export class MemberControllers {
   }
 
   public static async delete(req: Request, res: Response) {
-    const { id } = req.params
+    const { userId, listId } = req.params
 
     const memberServices = new MemberServices()
 
-    const output = await memberServices.delete(id)
+    await memberServices.delete(userId, listId)
 
-    return res.status(200).send(output)
+    return res.status(200).json({
+      success: true,
+    })
   }
 
   public static async list(req: Request, res: Response) {
-    const { id } = req.params
+    const { listId } = req.params
 
     const memberServices = new MemberServices()
 
-    const output = await memberServices.list(id)
+    const output = await memberServices.list(listId)
 
     return res.status(200).send(output)
   }

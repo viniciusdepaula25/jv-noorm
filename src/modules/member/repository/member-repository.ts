@@ -6,12 +6,13 @@ export type CreateMemberData = {
   role: string
 }
 
-export type DeleteMember = {
+export type DeleteMemberData = {
   user_id: string
+  list_id: string
 }
 
 export interface MemberRepository {
   createMember(data: CreateMemberData): Promise<ListMemberDTO>
-  deleteMember(data: DeleteMember): Promise<any>
-  findAll(id: string): Promise<any>
+  deleteMember(data: DeleteMemberData): Promise<any>
+  findAll(listId: string): Promise<any>
 }

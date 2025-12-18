@@ -34,14 +34,15 @@ export class MemberServices {
     return member
   }
 
-  public async delete(id: string) {
+  public async delete(userId: string, listId: string) {
     await this.listMemberRepository.deleteMember({
-      user_id: id,
+      user_id: userId,
+      list_id: listId,
     })
   }
 
-  public async list(id: string) {
-    const member = await this.listMemberRepository.findAll(id)
+  public async list(listId: string) {
+    const member = await this.listMemberRepository.findAll(listId)
     if (!member) throw new Error('Nenhuma lista cadastrada com o id informado.')
 
     return member

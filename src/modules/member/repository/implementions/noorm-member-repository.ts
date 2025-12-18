@@ -3,7 +3,7 @@ import { TesteBasicCrud } from 'src/shared/noorm/TesteCrud'
 
 import {
   CreateMemberData,
-  DeleteMember,
+  DeleteMemberData,
   MemberRepository,
 } from '../member-repository'
 
@@ -34,12 +34,14 @@ export class NoormMemberRepository
     return member
   }
 
-  async deleteMember(data: DeleteMember) {
+  async deleteMember(data: DeleteMemberData) {
     await db.update({
       command: `UPDATE list_member
                    SET deleted_at = NOW()
-                 WHERE user_id = ?`,
-      values: [data],
+                 WHERE user_id = ?
+                   AND list_id = ?
+                   AND deleted_at IS NULL`,
+      values: [data.user_id, data.list_id],
     })
   }
 

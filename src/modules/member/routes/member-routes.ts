@@ -6,5 +6,9 @@ import { MemberControllers } from '../controllers/member-controllers'
 export const memberRoutes = Router()
 
 memberRoutes.post('/:listId', authorized, MemberControllers.create)
-memberRoutes.delete('/', authorized, MemberControllers.delete)
-memberRoutes.get('/list/:id', authorized, MemberControllers.list)
+memberRoutes.delete(
+  '/:listId/user/:userId',
+  authorized,
+  MemberControllers.delete,
+)
+memberRoutes.get('/:listId', authorized, MemberControllers.list)
