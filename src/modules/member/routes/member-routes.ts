@@ -7,4 +7,4 @@ export const memberRoutes = Router()
 
 memberRoutes.post('/:listId', authorized, MemberControllers.create)
 memberRoutes.delete('/', authorized, MemberControllers.delete)
-memberRoutes.get('/list/:listId', authorized, MemberControllers.list)
+memberRoutes.get('/list/:id', authorized, MemberControllers.list)
