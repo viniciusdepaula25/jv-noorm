@@ -1,4 +1,4 @@
-// import { db } from 'src/db/database'
+import { db } from 'src/db/database'
 import { TaskDTO } from 'src/models/TaskDTO'
 import { TesteBasicCrud } from 'src/shared/noorm/TesteCrud'
 
@@ -27,6 +27,22 @@ export class NoormtTaskRepository
 
   async createTask(data: CreateTasksData): Promise<TaskDTO> {
     const task = await this.create({ data })
+
+    return task
+  }
+
+  async findAll(listId: string) {
+    const task = await db.queryRows({
+      sql: `SELECT t.list_id,
+                   t.title,
+                   t.description,
+                   t.is_completed,
+                   t.assingned_to_id
+              FROM task t    
+             WHERE t.list_id = ?
+               AND t.deleted_at IS NULL`,
+      values: [listId],
+    })
 
     return task
   }

@@ -34,4 +34,10 @@ export class TaskServices {
 
     return task
   }
+
+  public async list(listId: string) {
+    const task = await this.taskRepository.findAll(listId)
+
+    return task
+  }
 }

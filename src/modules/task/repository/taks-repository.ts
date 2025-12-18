@@ -9,4 +9,5 @@ export type CreateTasksData = {
 
 export interface TasksRepository {
   createTask(data: CreateTasksData): Promise<TaskDTO>
+  findAll(listId: string): Promise<any>
 }

@@ -19,4 +19,14 @@ export class TaskControllers {
 
     return res.status(201).send(output)
   }
+
+  public static async list(req: Request, res: Response) {
+    const { listId } = req.params
+
+    const taskService = new TaskServices()
+
+    const output = await taskService.list(listId)
+
+    return res.status(200).send(output)
+  }
 }
