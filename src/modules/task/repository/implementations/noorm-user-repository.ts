@@ -4,6 +4,7 @@ import { TesteBasicCrud } from 'src/shared/noorm/TesteCrud'
 
 import {
   CreateTasksData,
+  IsCompleted,
   TasksRepository,
   UpdateTaskData,
 } from '../taks-repository'
@@ -71,6 +72,18 @@ export class NoormtTaskRepository
                  WHERE id = ?
                    AND deleted_at IS NULL`,
       values: [data.title, data.description, data.assigned_to_id, data.id],
+    })
+
+    return task
+  }
+
+  async toggle(data: IsCompleted) {
+    const task = await db.update({
+      command: `UPDATE task
+                   SET is_completed = ?
+                 WHERE id = ?
+                   AND deleted_at IS NULL`,
+      values: [data.isCompleted, data.id],
     })
 
     return task

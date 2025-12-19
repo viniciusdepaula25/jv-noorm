@@ -14,9 +14,15 @@ export type UpdateTaskData = {
   assigned_to_id: string
 }
 
+export type IsCompleted = {
+  id: string
+  isCompleted: string
+}
+
 export interface TasksRepository {
   createTask(data: CreateTasksData): Promise<TaskDTO>
   findAll(listId: string): Promise<any>
   updateTask(data: UpdateTaskData): Promise<any>
   findById(id: string): Promise<any>
+  toggle(data: IsCompleted): Promise<any>
 }

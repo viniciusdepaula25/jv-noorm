@@ -61,7 +61,7 @@ export class TaskServices {
     if (!description) throw new Error('É necessario informar um colaborador.')
 
     const findTask = await this.taskRepository.findById(id)
-    if (!findTask) throw new Error('Nenhuma task encontrado com id informado')
+    if (!findTask) throw new Error('Nenhuma tarefa encontrado com id informado')
 
     await this.taskRepository.updateTask({
       id,
@@ -73,4 +73,14 @@ export class TaskServices {
 
     return result
   }
+
+  // public async IsCompleted(id: string, IsCompleted: boolean) {
+  //   if (!id) throw new Error('É necessario informar o ID da tarefa.')
+  //   if (!IsCompleted) throw Error('É necessario o status.')
+
+  //   const findTask = await this.taskRepository.findById(id)
+  //   if (!findTask) throw new Error('Nenhuma task encontrado com id informado')
+
+  //   await this.taskRepository.
+  // }
 }
