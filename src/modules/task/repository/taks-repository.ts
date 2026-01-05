@@ -16,7 +16,7 @@ export type UpdateTaskData = {
 
 export type IsCompleted = {
   id: string
-  isCompleted: string
+  is_completed: boolean
 }
 
 export interface TasksRepository {

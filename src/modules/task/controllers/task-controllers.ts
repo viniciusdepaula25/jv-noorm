@@ -46,4 +46,16 @@ export class TaskControllers {
 
     return res.status(200).send(output)
   }
+
+  public static async isCompleted(req: Request, res: Response) {
+    const { id } = req.params
+
+    const { isCompleted } = req.body
+
+    const taskService = new TaskServices()
+
+    const output = await taskService.isCompleted(isCompleted, id)
+
+    return res.status(200).send(output)
+  }
 }

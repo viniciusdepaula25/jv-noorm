@@ -83,7 +83,7 @@ export class NoormtTaskRepository
                    SET is_completed = ?
                  WHERE id = ?
                    AND deleted_at IS NULL`,
-      values: [data.isCompleted, data.id],
+      values: [data.is_completed, data.id],
     })
 
     return task
