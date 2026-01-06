@@ -38,7 +38,17 @@ export class NoormtTaskRepository
 
   async findById(id: string) {
     const task = await db.queryRow({
-      sql: `SELECT t.*
+      sql: `SELECT t.id as task_id,
+                   t.list_id,
+                   t.title,
+                   t.description,
+                   case when t.is_completed = 0
+                        then 'PENDENTE'
+                   else 'CONCLUIDO' end as isCompleted,
+                   t.assigned_to_id,
+                   t.created_at,
+                   t.updated_at,
+                   t.deleted_at
               FROM task t
              WHERE id = ?
                AND deleted_at IS NULL`,
@@ -56,8 +66,8 @@ export class NoormtTaskRepository
                    t.title,
                    t.description,
                    case when t.is_completed = 0
-                        then false
-                   else true end as isCompleted,
+                        then 'PENDENTE'
+                   else 'CONCLUIDO' end as isCompleted,
                    t.assigned_to_id
               FROM task t    
              WHERE t.list_id = ?
@@ -65,13 +75,13 @@ export class NoormtTaskRepository
       values: [listId],
     })
 
-    const items = task?.map((item) => {
-      item.isCompleted = !!item.isCompleted
+    // const items = task?.map((item) => {
+    //   item.isCompleted = !!item.isCompleted
 
-      return item
-    })
+    //   return item
+    // })
 
-    return items
+    return task
   }
 
   async updateTask(data: UpdateTaskData) {

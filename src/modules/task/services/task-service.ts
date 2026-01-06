@@ -87,7 +87,9 @@ export class TaskServices {
       id,
     })
 
-    return await this.taskRepository.findById(id)
+    const task = await this.taskRepository.findById(id)
+
+    return task
   }
 
   public async delete(id: string) {
