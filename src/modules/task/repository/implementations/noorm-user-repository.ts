@@ -51,10 +51,13 @@ export class NoormtTaskRepository
 
   async findAll(listId: string) {
     const task = await db.queryRows({
-      sql: `SELECT t.list_id,
+      sql: `SELECT t.id as taskId,
+                   t.list_id,
                    t.title,
                    t.description,
-                   t.is_completed,
+                   case when t.is_completed = 0
+                        then false
+                   else true end as isCompleted,
                    t.assigned_to_id
               FROM task t    
              WHERE t.list_id = ?
@@ -62,7 +65,13 @@ export class NoormtTaskRepository
       values: [listId],
     })
 
-    return task
+    const items = task?.map((item) => {
+      item.isCompleted = !!item.isCompleted
+
+      return item
+    })
+
+    return items
   }
 
   async updateTask(data: UpdateTaskData) {
@@ -87,5 +96,14 @@ export class NoormtTaskRepository
     })
 
     return task
+  }
+
+  async deleteTask(id: string) {
+    await this.delete({
+      key: id,
+      options: {
+        softDelete: true,
+      },
+    })
   }
 }

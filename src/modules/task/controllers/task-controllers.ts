@@ -47,15 +47,27 @@ export class TaskControllers {
     return res.status(200).send(output)
   }
 
-  public static async isCompleted(req: Request, res: Response) {
+  public static async toggle(req: Request, res: Response) {
     const { id } = req.params
 
     const { isCompleted } = req.body
 
     const taskService = new TaskServices()
 
-    const output = await taskService.isCompleted(isCompleted, id)
+    const output = await taskService.toggle(isCompleted, id)
 
     return res.status(200).send(output)
+  }
+
+  public static async delete(req: Request, res: Response) {
+    const { id } = req.params
+
+    const taskService = new TaskServices()
+
+    await taskService.delete(id)
+
+    return res.status(200).json({
+      success: true,
+    })
   }
 }

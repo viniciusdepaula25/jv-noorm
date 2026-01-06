@@ -25,4 +25,5 @@ export interface TasksRepository {
   updateTask(data: UpdateTaskData): Promise<any>
   findById(id: string): Promise<any>
   toggle(data: IsCompleted): Promise<any>
+  deleteTask(id: string): Promise<any>
 }

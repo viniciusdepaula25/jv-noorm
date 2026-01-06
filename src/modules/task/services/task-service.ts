@@ -74,16 +74,28 @@ export class TaskServices {
     return result
   }
 
-  public async isCompleted(isCompleted: boolean, id: string) {
+  public async toggle(isCompleted: boolean, id: string) {
     if (!id) throw new Error('É necessario informar o ID da tarefa.')
-    if (!isCompleted) throw Error('É necessario o status.')
+    if (isCompleted === null || isCompleted === undefined)
+      throw Error('É necessario o status.')
 
     const findTask = await this.taskRepository.findById(id)
-    if (!findTask) throw new Error('Nenhuma task encontrado com id informado')
+    if (!findTask) throw new Error('Nenhuma tarefa encontrado com id informado')
 
     await this.taskRepository.toggle({
       is_completed: isCompleted,
       id,
     })
+
+    return await this.taskRepository.findById(id)
+  }
+
+  public async delete(id: string) {
+    if (!id) throw new Error('É necessario informar o ID da tarefa.')
+
+    const findTask = await this.taskRepository.findById(id)
+    if (!findTask) throw Error('Nenhuma tarefa encontrada com ID informado.')
+
+    await this.taskRepository.deleteTask(id)
   }
 }
