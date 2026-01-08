@@ -1,12 +1,31 @@
 import { Router } from 'express'
-import { authorized } from 'src/shared/middlewares/authenticated'
+import {
+  authorized,
+  isListMember,
+  isTaskOwnerOrAssigned,
+} from 'src/shared/middlewares/authenticated'
 
 import { TaskControllers } from '../controllers/task-controllers'
 
 export const taskRoutes = Router()
 
-taskRoutes.post('/:listId', authorized, TaskControllers.create)
-taskRoutes.get('/:listId', authorized, TaskControllers.list)
-taskRoutes.put('/:id', authorized, TaskControllers.update)
-taskRoutes.patch('/:id/iscompleted', authorized, TaskControllers.toggle)
-taskRoutes.delete('/:id', authorized, TaskControllers.delete)
+taskRoutes.post('/:listId', authorized, isListMember, TaskControllers.create)
+taskRoutes.get('/:listId', authorized, isListMember, TaskControllers.list)
+taskRoutes.put(
+  '/lista/:listId/tarefa/:id',
+  authorized,
+  isListMember,
+  TaskControllers.update,
+)
+taskRoutes.patch(
+  '/:id/iscompleted',
+  authorized,
+  isTaskOwnerOrAssigned,
+  TaskControllers.toggle,
+)
+taskRoutes.delete(
+  '/:id',
+  authorized,
+  isTaskOwnerOrAssigned,
+  TaskControllers.delete,
+)

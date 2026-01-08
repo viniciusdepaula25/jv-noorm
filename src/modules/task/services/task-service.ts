@@ -1,4 +1,4 @@
-import { NoormtTaskRepository } from '../repository/implementations/noorm-user-repository'
+import { NoormtTaskRepository } from '../repository/implementations/noorm-task-repository'
 import { TasksRepository } from '../repository/taks-repository'
 
 type createData = {
@@ -9,6 +9,7 @@ type createData = {
 }
 
 type updateData = {
+  listId: string
   id: string
   title: string
   description: string
@@ -55,7 +56,13 @@ export class TaskServices {
     return task
   }
 
-  public async update({ id, title, description, assignedToId }: updateData) {
+  public async update({
+    listId,
+    id,
+    title,
+    description,
+    assignedToId,
+  }: updateData) {
     if (!title) throw new Error('É necessario informar o titulo.')
     if (!description) throw new Error('É necessario informar o descrição.')
     if (!description) throw new Error('É necessario informar um colaborador.')
@@ -64,6 +71,7 @@ export class TaskServices {
     if (!findTask) throw new Error('Nenhuma tarefa encontrado com id informado')
 
     await this.taskRepository.updateTask({
+      list_id: listId,
       id,
       title,
       description,

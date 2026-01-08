@@ -7,9 +7,6 @@ import {
   CreateListMemberData,
   GetAllListData,
   UpdateListData,
-  GetListData,
-  DeleteListData,
-  // GetListMemberData,
 } from '../list-repository'
 
 export class NoormListRepository
@@ -49,13 +46,13 @@ export class NoormListRepository
     return list
   }
 
-  async getList(data: GetListData) {
+  async getList(listId: string) {
     const list = await db.queryRow({
-      sql: ` SELECT ls.id, ls.title
+      sql: ` SELECT ls.id, ls.title, ls.owner_id
                FROM list ls
               WHERE id = ?
                 AND deleted_at IS NULL`,
-      values: [data.id],
+      values: [listId],
     })
 
     return list
@@ -67,12 +64,18 @@ export class NoormListRepository
                     ls.title
                FROM list ls
                JOIN list_member lm ON ls.id = lm.list_id
-              WHERE ls.owner_id = ?
-                 OR lm.user_id = ?
-                AND ls.deleted_at IS NULL`,
+              WHERE lm.deleted_at IS NULL
+                AND ls.owner_id = ?
+                 OR lm.user_id = ?`,
       values: [data.owner_id, data.user_id],
     })
-
+    // SELECT ls.id,
+    //        ls.title
+    //   FROM list ls
+    //   JOIN list_member lm ON ls.id = lm.list_id
+    //  WHERE ls.owner_id = '1f6f004e-cc8c-11f0-8dc2-d413e233571e'
+    //     OR lm.user_id = '1f6f004e-cc8c-11f0-8dc2-d413e233571e'
+    //    AND lm.deleted_at IS NULL
     return list
   }
 
@@ -87,19 +90,19 @@ export class NoormListRepository
     return list
   }
 
-  async deleteList(data: DeleteListData) {
+  async deleteList(id: string) {
     await db.update({
       command: ` UPDATE list
                     SET deleted_at = NOW()
                   WHERE id = ?`,
-      values: [data.id],
+      values: [id],
     })
 
     await db.update({
       command: `UPDATE list_member
                    SET deleted_at = NOW()
                  WHERE list_id = ?`,
-      values: [data.id],
+      values: [id],
     })
   }
 }

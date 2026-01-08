@@ -12,10 +12,6 @@ export type CreateListMemberData = {
   role: string
 }
 
-export type GetListData = {
-  id: string
-}
-
 export type GetAllListData = {
   owner_id: string
   user_id: string
@@ -26,10 +22,6 @@ export type UpdateListData = {
   id: string
 }
 
-export type DeleteListData = {
-  id: string
-}
-
 export type GetListMemberData = {
   list_id: string
 }
@@ -37,8 +29,8 @@ export interface ListRepository {
   createList(data: CreateListData): Promise<ListDTO>
   createListMember(data: CreateListMemberData): Promise<ListMemberDTO>
   getAllList(data: GetAllListData): Promise<any>
-  getList(data: GetListData): Promise<any>
+  getList(listId: string): Promise<any>
   updateList(data: UpdateListData): Promise<any>
-  deleteList(data: DeleteListData): Promise<any>
+  deleteList(id: string): Promise<any>
   // getListMember(data: GetListMemberData): Promise<any>
 }

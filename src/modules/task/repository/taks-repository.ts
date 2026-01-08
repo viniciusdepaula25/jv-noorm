@@ -8,6 +8,7 @@ export type CreateTasksData = {
 }
 
 export type UpdateTaskData = {
+  list_id: string
   id: string
   title: string
   description: string

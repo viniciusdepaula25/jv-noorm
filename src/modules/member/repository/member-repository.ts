@@ -11,8 +11,14 @@ export type DeleteMemberData = {
   list_id: string
 }
 
+export type GetRoleData = {
+  user_id: string
+  list_id: string
+}
+
 export interface MemberRepository {
   createMember(data: CreateMemberData): Promise<ListMemberDTO>
   deleteMember(data: DeleteMemberData): Promise<any>
   findAll(listId: string): Promise<any>
+  getRole(data: GetRoleData): Promise<any>
 }

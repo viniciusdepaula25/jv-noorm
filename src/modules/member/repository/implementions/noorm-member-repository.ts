@@ -4,6 +4,7 @@ import { TesteBasicCrud } from 'src/shared/noorm/TesteCrud'
 import {
   CreateMemberData,
   DeleteMemberData,
+  GetRoleData,
   MemberRepository,
 } from '../member-repository'
 
@@ -56,6 +57,20 @@ export class NoormMemberRepository
              WHERE lm.list_id = ?
                AND lm.deleted_at IS NULL`,
       values: [id],
+    })
+
+    return member
+  }
+
+  async getRole(data: GetRoleData) {
+    const member = await db.queryRow({
+      sql: `SELECT lm.role,
+                   lm.deleted_at
+              FROM list_member lm
+             WHERE lm.list_id = ?
+               AND lm.user_id = ?
+               AND lm.deleted_at IS NULL`,
+      values: [data.list_id, data.user_id],
     })
 
     return member

@@ -37,13 +37,13 @@ export class ListServices {
     return list
   }
 
-  public async getList(id: string) {
-    const list = await this.listRepository.getList({ id })
+  public async get(listId: string) {
+    const list = await this.listRepository.getList(listId)
 
     return list
   }
 
-  public async getAllList(userId: string) {
+  public async list(userId: string) {
     const data = {
       owner_id: userId,
       user_id: userId,
@@ -53,19 +53,20 @@ export class ListServices {
     return list
   }
 
-  public async update(title: string, id: string) {
+  public async update(title: string, listId: string) {
     await this.listRepository.updateList({
       title,
-      id,
+      id: listId,
     })
 
-    const output = await this.listRepository.getList({ id })
+    const output = await this.listRepository.getList(listId)
 
     return output
   }
 
   public async delete(id: string) {
-    await this.listRepository.deleteList({ id })
+    if (!id) throw new Error('Necessario informar ID da lista')
+    await this.listRepository.deleteList(id)
 
     return true
   }

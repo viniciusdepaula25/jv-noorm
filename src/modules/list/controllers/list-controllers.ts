@@ -4,7 +4,7 @@ import { ListServices } from '../services/list-services'
 
 export class ListController {
   public static async create(req: Request, res: Response) {
-    const { userId } = req.params
+    const userId = req.user.id
     const { title } = req.body
     const listServices = new ListServices()
 
@@ -13,33 +13,33 @@ export class ListController {
     return res.status(201).send(output)
   }
 
-  public static async getList(req: Request, res: Response) {
-    const { id } = req.params
+  public static async get(req: Request, res: Response) {
+    const { listId } = req.params
 
     const listServices = new ListServices()
 
-    const output = await listServices.getList(id)
+    const output = await listServices.get(listId)
 
     return res.status(200).send(output)
   }
 
-  public static async getAllList(req: Request, res: Response) {
-    const { userId } = req.params
+  public static async list(req: Request, res: Response) {
+    const userId = req.user.id
 
     const listServices = new ListServices()
 
-    const output = await listServices.getAllList(userId)
+    const output = await listServices.list(userId)
 
     return res.status(200).send(output)
   }
 
   public static async update(req: Request, res: Response) {
-    const { id } = req.params
+    const { listId } = req.params
     const { title } = req.body
 
     const listServices = new ListServices()
 
-    const output = await listServices.update(title, id)
+    const output = await listServices.update(title, listId)
 
     return res.status(200).send(output)
   }

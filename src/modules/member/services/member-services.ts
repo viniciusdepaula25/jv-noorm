@@ -47,4 +47,13 @@ export class MemberServices {
 
     return member
   }
+
+  public async getRole(listId: string, userId: string) {
+    const member = await this.listMemberRepository.getRole({
+      list_id: listId,
+      user_id: userId,
+    })
+
+    return member
+  }
 }

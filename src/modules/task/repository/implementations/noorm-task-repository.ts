@@ -74,13 +74,6 @@ export class NoormtTaskRepository
                AND t.deleted_at IS NULL`,
       values: [listId],
     })
-
-    // const items = task?.map((item) => {
-    //   item.isCompleted = !!item.isCompleted
-
-    //   return item
-    // })
-
     return task
   }
 
@@ -89,8 +82,15 @@ export class NoormtTaskRepository
       command: `UPDATE task
                    SET title = ?, description = ?, assigned_to_id = ?
                  WHERE id = ?
+                   AND list_id = ?
                    AND deleted_at IS NULL`,
-      values: [data.title, data.description, data.assigned_to_id, data.id],
+      values: [
+        data.title,
+        data.description,
+        data.assigned_to_id,
+        data.id,
+        data.list_id,
+      ],
     })
 
     return task

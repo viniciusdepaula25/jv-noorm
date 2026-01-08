@@ -31,13 +31,14 @@ export class TaskControllers {
   }
 
   public static async update(req: Request, res: Response) {
-    const { id } = req.params
+    const { listId, id } = req.params
 
     const { title, description, assignedToId } = req.body
 
     const taskService = new TaskServices()
 
     const output = await taskService.update({
+      listId,
       id,
       title,
       description,
