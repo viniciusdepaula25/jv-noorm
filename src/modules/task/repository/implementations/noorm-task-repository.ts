@@ -4,6 +4,7 @@ import { TesteBasicCrud } from 'src/shared/noorm/TesteCrud'
 
 import {
   CreateTasksData,
+  FindOwnerAndAssigned,
   IsCompleted,
   TasksRepository,
   UpdateTaskData,
@@ -103,6 +104,21 @@ export class NoormtTaskRepository
                  WHERE id = ?
                    AND deleted_at IS NULL`,
       values: [data.is_completed, data.id],
+    })
+
+    return task
+  }
+
+  async findOwnerAndAssigned(data: FindOwnerAndAssigned) {
+    const task = await db.queryRows({
+      sql: `select ls.owner_id,
+                   tk.assigned_to_id
+              from task tk
+              join list ls on tk.list_id = ls.id
+             where tk.id = ?
+               and tk.list_id = ?
+               and tk.deleted_at is null`,
+      values: [data.task_id, data.list_id],
     })
 
     return task

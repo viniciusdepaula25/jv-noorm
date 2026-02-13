@@ -100,6 +100,15 @@ export class TaskServices {
     return task
   }
 
+  public async findOwnerAndAssigned(taskId: string, listId: string) {
+    const task = await this.taskRepository.findOwnerAndAssigned({
+      task_id: taskId,
+      list_id: listId,
+    })
+
+    return task
+  }
+
   public async delete(id: string) {
     if (!id) throw new Error('É necessario informar o ID da tarefa.')
 

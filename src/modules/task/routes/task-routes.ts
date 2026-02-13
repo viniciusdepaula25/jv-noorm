@@ -18,7 +18,7 @@ taskRoutes.put(
   TaskControllers.update,
 )
 taskRoutes.patch(
-  '/:id/iscompleted',
+  '/:listId/lists/:taskId/iscompleted',
   authorized,
   isTaskOwnerOrAssigned,
   TaskControllers.toggle,

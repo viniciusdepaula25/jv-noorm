@@ -20,6 +20,11 @@ export type IsCompleted = {
   is_completed: boolean
 }
 
+export type FindOwnerAndAssigned = {
+  task_id: string
+  list_id: string
+}
+
 export interface TasksRepository {
   createTask(data: CreateTasksData): Promise<TaskDTO>
   findAll(listId: string): Promise<any>
@@ -27,4 +32,5 @@ export interface TasksRepository {
   findById(id: string): Promise<any>
   toggle(data: IsCompleted): Promise<any>
   deleteTask(id: string): Promise<any>
+  findOwnerAndAssigned(data: FindOwnerAndAssigned): Promise<any>
 }

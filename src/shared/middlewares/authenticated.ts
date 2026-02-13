@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
-import { db } from 'src/db/database'
 import { env } from 'src/env'
 import { MemberServices } from 'src/modules/member/services/member-services'
+import { TaskServices } from 'src/modules/task/services/task-service'
 
 export async function authorized(
   req: Request,
@@ -78,18 +78,11 @@ export async function isTaskOwnerOrAssigned(
   next: NextFunction,
 ) {
   const userId = req.user.id
-  const { listId, taskId } = req.params
+  const { taskId, listId } = req.params
 
-  const task = await db.queryRows({
-    sql: `  select ls.owner_id,
-                   tk.assigned_to_id
-              from task tk
-              join list ls on tk.list_id = ls.id
-             where tk.id = ?
-               and tk.list_id = ?
-               and tk.deleted_at is null`,
-    values: [taskId, listId],
-  })
+  const taskServices = new TaskServices()
+
+  const task = await taskServices.findOwnerAndAssigned(taskId, listId)
 
   if (!task) {
     return res.status(404).send('Tarefa não encontrada.')
